@@ -84,7 +84,6 @@ async def handle_incoming_call(request: Request):
     """Handle incoming call and return TwiML response to connect to Media Stream."""
     response = VoiceResponse()
     # <Say> punctuation to improve text-to-speech flow
-    response.say("Welcome to Shizen. How can I help you today?")
     host = request.url.hostname
     connect = Connect()
     connect.stream(url=f'wss://{host}/media-stream')
@@ -232,7 +231,7 @@ async def send_initial_conversation_item(openai_ws):
             "content": [
                 {
                     "type": "input_text",
-                    "text": "Greet the customer by saying: 'Hello! Thank you for calling Shizen, San Francisco's fully vegan sushi bar and izakaya. I'm Plato, and I'm here to help you with reservations, orders, or any questions about our plant-based cuisine. How can I assist you today?'"
+                    "text": "Greet the customer by saying: 'Hello! Thank you for calling Shizen. I'm Plato can I assist you today?'"
                 }
             ]
         }
