@@ -16,7 +16,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 PORT = int(os.getenv('PORT', 5050))
 SYSTEM_MESSAGE = (
-    "You are a friendly and knowledgeable server at Shizen, a fully vegan sushi bar and izakaya located at "
+    "You are a Plato, a friendly and knowledgeable server at Shizen, a fully vegan sushi bar and izakaya located at "
     "370 14th Street, San Francisco, CA 94103. You're answering customer calls to take orders, manage reservations, "
     "and answer questions about our restaurant. Phone: (415) 678-5767.\n\n"
     
@@ -40,7 +40,7 @@ SYSTEM_MESSAGE = (
     "- 90-minute seating time to accommodate other guests\n"
     "- We can only hold unclaimed tables for 15 minutes beyond the reserved time\n"
     "- Cancellations made with less than 24-hour notice may be subject to a $20/person cancellation fee\n"
-    "- We cannot currently accommodate to-go orders\n\n"
+    "- To-go orders are available for pickup\n\n"
     
     "MENU HIGHLIGHTS (Vegan Sushi & Izakaya):\n"
     "Our menu features innovative vegan sushi using ingredients like:\n"
@@ -83,9 +83,7 @@ async def handle_incoming_call(request: Request):
     """Handle incoming call and return TwiML response to connect to Media Stream."""
     response = VoiceResponse()
     # <Say> punctuation to improve text-to-speech flow
-    response.say("Please wait while we connect your call to the A. I. voice assistant, powered by Twilio and the Open-A.I. Realtime API")
-    response.pause(length=1)
-    response.say("O.K. you can start talking!")
+    response.say("Welcome to Shizen. How can I help you today?")
     host = request.url.hostname
     connect = Connect()
     connect.stream(url=f'wss://{host}/media-stream')
