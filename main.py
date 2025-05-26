@@ -148,6 +148,34 @@ async def handle_media_stream(websocket: WebSocket):
                     if response['type'] in LOG_EVENT_TYPES:
                         print(f"Received event: {response['type']}", response)
 
+                    # Check for goodbye in completed responses
+                    if response.get('type') == 'response.done':
+                        # Check if the response contains goodbye phrases
+                        if 'output' in response.get('response', {}):
+                            for output_item in response['response']['output']:
+                                if 'content' in output_item:
+                                    for content in output_item['content']:
+                                        if content.get('type') == 'audio' and 'transcript' in content:
+                                            transcript = content['transcript'].lower()
+                                            goodbye_phrases = ['goodbye', 'bye', 'see you', 'talk to you later', 'have a good', 'take care', 'thanks for your help', 'that\'s all']
+                                            if any(phrase in transcript for phrase in goodbye_phrases):
+                                                print(f"Goodbye detected in assistant transcript: {transcript}")
+                                                print("Ending call...")
+                                                # Send a final message to close the call
+                                                await websocket.send_json({
+                                                    "event": "stop",
+                                                    "streamSid": stream_sid
+                                                })
+                                                # Close the WebSocket connection
+                                                await websocket.close()
+                                                return
+
+                    # Check for goodbye in customer input (input_audio_buffer.committed events)
+                    if response.get('type') == 'input_audio_buffer.committed':
+                        # Note: Customer speech transcripts are not directly available in this event
+                        # The goodbye detection will primarily work on assistant responses
+                        pass
+
                     if response.get('type') == 'response.audio.delta' and 'delta' in response:
                         audio_payload = base64.b64encode(base64.b64decode(response['delta'])).decode('utf-8')
                         audio_delta = {
