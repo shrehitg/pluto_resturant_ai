@@ -4,7 +4,8 @@ import base64
 import asyncio
 import websockets
 from fastapi import FastAPI, WebSocket, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.websockets import WebSocketDisconnect
 from twilio.twiml.voice_response import VoiceResponse, Connect, Say, Stream
 from dotenv import load_dotenv
@@ -16,7 +17,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 PORT = int(os.getenv('PORT', 5050))
 SYSTEM_MESSAGE = (
-    "You are a Plato, a friendly and knowledgeable server at Shizen, a fully vegan sushi bar and izakaya located at "
+    "You are a Pluto, a friendly and knowledgeable server at Shizen, a fully vegan sushi bar and izakaya located at "
     "370 14th Street, San Francisco, CA 94103. You're answering customer calls to take orders, manage reservations, "
     "and answer questions about our restaurant. Phone: (415) 678-5767.\n\n"
     
@@ -75,6 +76,11 @@ app = FastAPI()
 if not OPENAI_API_KEY:
     raise ValueError('Missing the OpenAI API key. Please set it in the .env file.')
 
+# Serve the logo image
+@app.get("/logo.png")
+async def get_logo():
+    return FileResponse("logo.png", media_type="image/png")
+
 @app.get("/", response_class=HTMLResponse)
 async def index_page():
     html_content = """
@@ -83,8 +89,16 @@ async def index_page():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pluto - Restaurant Voice Agents</title>
+        <title>Pluto - AI Phone Agent for Restaurants</title>
+        <link rel="icon" type="image/png" href="/logo.png">
         <style>
+            /* Accent & neutrals */
+            :root {
+                --gold-accent: #f1c40f;
+                --bg-light: #f5f6fa;
+                --text-dark: #2e2e3d;
+            }
+            
             * {
                 margin: 0;
                 padding: 0;
@@ -94,7 +108,7 @@ async def index_page():
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 line-height: 1.6;
-                color: #333;
+                color: var(--text-dark);
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             }
             
@@ -125,6 +139,23 @@ async def index_page():
                 font-size: 1.8rem;
                 font-weight: bold;
                 color: #667eea;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .logo-icon {
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .logo-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
             
             .nav-links {
@@ -135,7 +166,7 @@ async def index_page():
             
             .nav-links a {
                 text-decoration: none;
-                color: #333;
+                color: var(--text-dark);
                 font-weight: 500;
                 transition: color 0.3s;
             }
@@ -168,7 +199,7 @@ async def index_page():
             
             .cta-button {
                 display: inline-block;
-                background: #ff6b6b;
+                background: var(--gold-accent);
                 color: white;
                 padding: 15px 30px;
                 text-decoration: none;
@@ -180,13 +211,13 @@ async def index_page():
             }
             
             .cta-button:hover {
-                background: #ff5252;
+                background: #d4ac0d;
                 transform: translateY(-2px);
-                box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+                box-shadow: 0 10px 25px rgba(241, 196, 15, 0.3);
             }
             
             .features {
-                background: white;
+                background: var(--bg-light);
                 padding: 80px 0;
             }
             
@@ -194,7 +225,7 @@ async def index_page():
                 text-align: center;
                 font-size: 2.5rem;
                 margin-bottom: 3rem;
-                color: #333;
+                color: var(--text-dark);
             }
             
             .features-grid {
@@ -205,7 +236,7 @@ async def index_page():
             }
             
             .feature-card {
-                background: #f8f9fa;
+                background: white;
                 padding: 2rem;
                 border-radius: 15px;
                 text-align: center;
@@ -225,7 +256,11 @@ async def index_page():
             .feature-card h3 {
                 font-size: 1.5rem;
                 margin-bottom: 1rem;
-                color: #333;
+                color: var(--text-dark);
+            }
+            
+            .feature-card p {
+                color: var(--text-dark);
             }
             
             .demo {
@@ -253,12 +288,12 @@ async def index_page():
             .phone-number {
                 font-size: 2rem;
                 font-weight: bold;
-                color: #ff6b6b;
+                color: var(--gold-accent);
                 margin: 1rem 0;
             }
             
             .footer {
-                background: #333;
+                background: var(--text-dark);
                 color: white;
                 text-align: center;
                 padding: 2rem 0;
@@ -293,7 +328,12 @@ async def index_page():
     <body>
         <header>
             <nav class="container">
-                <div class="logo">🪐 Pluto</div>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="/logo.png" alt="Pluto Logo">
+                    </div>
+                    <span>Pluto</span>
+                </div>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#features">Features</a></li>
@@ -306,7 +346,7 @@ async def index_page():
         <section id="home" class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>AI Voice Agents for Restaurants</h1>
+                    <h1>AI Phone Agent for Restaurants</h1>
                     <p>Transform your restaurant's phone experience with intelligent AI assistants that handle reservations, orders, and customer inquiries 24/7</p>
                     <a href="#demo" class="cta-button">Try Our Demo</a>
                 </div>
@@ -328,9 +368,9 @@ async def index_page():
                         <p>Trained specifically for restaurants, our AI understands menus, dietary restrictions, reservations, and food service operations.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🚀</div>
-                        <h3>Instant Setup</h3>
-                        <p>Get started in minutes. Simply provide your menu and restaurant details, and we'll have your AI agent ready to serve customers.</p>
+                        <div class="feature-icon">📊</div>
+                        <h3>Smart Customer Insights</h3>
+                        <p>Our AI remembers every customer's preferences, usual orders, and dining history. Send targeted promos via text, offer personalized recommendations, and create VIP experiences for your regulars automatically.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">💰</div>
@@ -343,9 +383,9 @@ async def index_page():
                         <p>Eliminate order mistakes with precise AI that confirms details, handles modifications, and processes payments seamlessly.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Analytics & Insights</h3>
-                        <p>Get detailed reports on call volume, popular items, peak hours, and customer preferences to optimize your business.</p>
+                        <div class="feature-icon">📈</div>
+                        <h3>Business Intelligence</h3>
+                        <p>Get detailed reports on call volume, peak hours, popular menu items, and conversion rates. Track performance metrics and optimize your operations with comprehensive dashboards and real-time analytics.</p>
                     </div>
                 </div>
             </div>
@@ -356,8 +396,8 @@ async def index_page():
                 <h2>Experience Our AI in Action</h2>
                 <div class="demo-card">
                     <h3>🍣 Call Shizen Restaurant</h3>
-                    <p>Try our live demo by calling our AI agent "Plato" at Shizen, a vegan sushi restaurant in San Francisco.</p>
-                    <div class="phone-number">📞 (415) 678-5767</div>
+                    <p>Try our live demo by calling our AI agent "Pluto" at Shizen, a vegan sushi restaurant in San Francisco.</p>
+                    <div class="phone-number">📞 (415) 449-7391</div>
                     <p><strong>What you can try:</strong></p>
                     <ul style="text-align: left; margin: 1rem 0; padding-left: 2rem;">
                         <li>Make a reservation for your party</li>
@@ -377,10 +417,10 @@ async def index_page():
                 <p>Contact us today to set up your custom AI voice agent</p>
                 <p style="margin-top: 1rem;">
                     <strong>Email:</strong> hello@getpluto.ai | 
-                    <strong>Phone:</strong> (555) 123-PLUTO
+                    <strong>Phone:</strong> (608) 886-1118
                 </p>
                 <p style="margin-top: 2rem; opacity: 0.7;">
-                    © 2024 Pluto. Powered by OpenAI Realtime API & Twilio.
+                    © 2025 Pluto.
                 </p>
             </div>
         </section>
@@ -567,7 +607,7 @@ async def send_initial_conversation_item(openai_ws):
             "content": [
                 {
                     "type": "input_text",
-                    "text": "Greet the customer by saying: 'Hello! Thank you for calling Shizen. I'm Plato can I assist you today?'"
+                    "text": "Greet the customer by saying: 'Hello! Thank you for calling Shizen. I'm Pluto can I assist you today?'"
                 }
             ]
         }
