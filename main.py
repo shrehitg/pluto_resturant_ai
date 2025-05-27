@@ -61,7 +61,7 @@ SYSTEM_MESSAGE = (
     "1-2 sentences maximum. Be direct and to the point while remaining friendly. Always offer to help with "
     "reservations or answer any questions about our unique vegan sushi experience."
 )
-VOICE = 'alloy'
+VOICE = 'sage'
 LOG_EVENT_TYPES = [
     'error', 'response.content.done', 'rate_limits.updated',
     'response.done', 'input_audio_buffer.committed',
@@ -97,7 +97,7 @@ async def handle_media_stream(websocket: WebSocket):
     await websocket.accept()
 
     async with websockets.connect(
-        'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01',
+        'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview',
         additional_headers={
             "Authorization": f"Bearer {OPENAI_API_KEY}",
             "OpenAI-Beta": "realtime=v1"
