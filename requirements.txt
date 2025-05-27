@@ -9,7 +9,7 @@ aiofiles==24.1.0
 
 # Data validation
 pydantic==2.10.5
-pydantic-core==2.27.5
+pydantic-core==2.27.2
 
 # Configuration
 python-dotenv==1.0.1
