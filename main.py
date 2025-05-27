@@ -383,9 +383,9 @@ async def index_page():
                         <p>Eliminate order mistakes with precise AI that confirms details, handles modifications, and processes payments seamlessly.</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">📈</div>
-                        <h3>Business Intelligence</h3>
-                        <p>Get detailed reports on call volume, peak hours, popular menu items, and conversion rates. Track performance metrics and optimize your operations with comprehensive dashboards and real-time analytics.</p>
+                        <div class="feature-icon">🔄</div>
+                        <h3>Daily Learning Loop</h3>
+                        <p>Receive daily reports of questions customers asked that your AI couldn't answer. Continuously improve your agent's knowledge base and ensure no customer inquiry goes unresolved.</p>
                     </div>
                 </div>
             </div>
