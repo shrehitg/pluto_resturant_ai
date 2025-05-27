@@ -385,7 +385,7 @@ async def index_page():
                     <div class="feature-card">
                         <div class="feature-icon">🔄</div>
                         <h3>Daily Learning Loop</h3>
-                        <p>Receive daily reports of questions customers asked that your AI couldn't answer. Continuously improve your agent's knowledge base and ensure no customer inquiry goes unresolved.</p>
+                        <p>Receive daily reports of novel questions and unique customer inquiries to continuously expand your AI's knowledge. Stay ahead of trends and ensure your agent evolves with your business.</p>
                     </div>
                 </div>
             </div>
