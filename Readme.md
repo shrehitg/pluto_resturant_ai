@@ -1,99 +1,272 @@
-#  Speech Assistant with Twilio Voice and the OpenAI Realtime API (Python)
+# 🪐 Pluto Restaurant AI
 
-This application demonstrates how to use Python, [Twilio Voice](https://www.twilio.com/docs/voice) and [Media Streams](https://www.twilio.com/docs/voice/media-streams), and [OpenAI's Realtime API](https://platform.openai.com/docs/) to make a phone call to speak with an AI Assistant. 
+**AI Phone Agent for Restaurants** - Powered by OpenAI Realtime API & Twilio
 
-The application opens websockets with the OpenAI Realtime API and Twilio, and sends voice audio from one to the other to enable a two-way conversation.
+Transform your restaurant's phone system with an intelligent AI assistant that handles reservations, takes orders, and provides exceptional customer service 24/7.
 
-See [here](https://www.twilio.com/en-us/blog/voice-ai-assistant-openai-realtime-api-python) for a tutorial overview of the code.
+---
 
-This application uses the following Twilio products in conjunction with OpenAI's Realtime API:
-- Voice (and TwiML, Media Streams)
-- Phone Numbers
+## 📋 Table of Contents
 
-> [!NOTE]
-> Outbound calling is beyond the scope of this app. However, we demoed [one way to do it here](https://www.twilio.com/en-us/blog/outbound-calls-python-openai-realtime-api-voice).
+- [Features](#-features)
+- [Demo](#-demo)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [Deployment](#-deployment)
+- [Configuration](#-configuration)
+- [API Endpoints](#-api-endpoints)
+- [Contributing](#-contributing)
 
-## Prerequisites
+---
 
-To use the app, you will  need:
+## ✨ Features
 
-- **Python 3.9+** We used \`3.9.13\` for development; download from [here](https://www.python.org/downloads/).
-- **A Twilio account.** You can sign up for a free trial [here](https://www.twilio.com/try-twilio).
-- **A Twilio number with _Voice_ capabilities.** [Here are instructions](https://help.twilio.com/articles/223135247-How-to-Search-for-and-Buy-a-Twilio-Phone-Number-from-Console) to purchase a phone number.
-- **An OpenAI account and an OpenAI API Key.** You can sign up [here](https://platform.openai.com/).
-  - **OpenAI Realtime API access.**
+### 🎯 **24/7 Availability**
+Never miss a call again. Pluto handles customer inquiries around the clock, ensuring consistent service even during busy periods or after hours.
 
-## Local Setup
+### 🧠 **Smart Customer Insights**
+Our AI remembers every customer's preferences, usual orders, and dining history. Send targeted promos via text, offer personalized recommendations, and create VIP experiences for your regulars automatically.
 
-There are 4 required steps and 1 optional step to get the app up-and-running locally for development and testing:
-1. Run ngrok or another tunneling solution to expose your local server to the internet for testing. Download ngrok [here](https://ngrok.com/).
-2. (optional) Create and use a virtual environment
-3. Install the packages
-4. Twilio setup
-5. Update the .env file
+### 🍽️ **Restaurant Expertise**
+Specialized AI trained on restaurant operations, menu knowledge, reservation systems, and customer service best practices.
 
-### Open an ngrok tunnel
-When developing & testing locally, you'll need to open a tunnel to forward requests to your local development server. These instructions use ngrok.
+### 📈 **Business Intelligence**
+Get detailed reports on call volume, peak hours, popular menu items, and conversion rates. Track performance metrics and optimize your operations with comprehensive dashboards and real-time analytics.
 
-Open a Terminal and run:
+---
+
+## 🎮 Demo
+
+**Try it live:** Call **(415) 449-7391** to experience Pluto in action!
+
+> 🏮 **Featured Restaurant:** Shizen - A fully vegan sushi bar and izakaya in San Francisco
+> 
+> Our AI assistant "Pluto" handles:
+> - **Reservations** - Complete booking system with availability checking
+> - **Menu Information** - Detailed knowledge of vegan sushi offerings
+> - **Customer Service** - Hours, policies, and general inquiries
+> - **Order Taking** - To-go orders and special requests
+
+---
+
+## 🛠 Tech Stack
+
+- **Backend:** FastAPI (Python)
+- **AI:** OpenAI Realtime API (gpt-4o-realtime-preview)
+- **Telephony:** Twilio Voice & Media Streams
+- **Audio:** Real-time WebSocket streaming with G.711 μ-law
+- **Deployment:** Railway (with Docker support)
+- **Frontend:** Modern responsive website with custom logo integration
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.9+
+- OpenAI API key
+- Twilio account with phone number
+- ngrok (for local development)
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/shrehitg/pluto_resturant_ai.git
+cd pluto_restaurant_ai
+pip3 install -r requirements.txt
 ```
+
+### 2. Environment Setup
+
+Create a `.env` file:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+PORT=5050
+```
+
+### 3. Run Locally
+
+```bash
+# Start the server
+python3 main.py
+
+# In another terminal, expose via ngrok
 ngrok http 5050
 ```
-Once the tunnel has been opened, copy the `Forwarding` URL. It will look something like: `https://[your-ngrok-subdomain].ngrok.app`. You will
-need this when configuring your Twilio number setup.
 
-Note that the `ngrok` command above forwards to a development server running on port `5050`, which is the default port configured in this application. If
-you override the `PORT` defined in `index.js`, you will need to update the `ngrok` command accordingly.
+### 4. Configure Twilio
 
-Keep in mind that each time you run the `ngrok http` command, a new URL will be created, and you'll need to update it everywhere it is referenced below.
+1. Set your Twilio webhook URL to: `https://your-ngrok-url.com/incoming-call`
+2. Configure media streams to: `wss://your-ngrok-url.com/media-stream`
 
-### (Optional) Create and use a virtual environment
+### 5. Test Your AI
 
-To reduce cluttering your global Python environment on your machine, you can create a virtual environment. On your command line, enter:
+- **Website:** Visit `http://localhost:5050`
+- **Phone:** Call your Twilio number
+- **Health Check:** `GET /test-twiml`
 
+---
+
+## 🌐 Deployment
+
+### Railway (Recommended)
+
+1. **Connect Repository:**
+   - Go to [Railway](https://railway.app)
+   - Connect your GitHub account
+   - Select `pluto_resturant_ai` repository
+
+2. **Environment Variables:**
+   ```
+   OPENAI_API_KEY=your_key_here
+   PORT=5050
+   ```
+
+3. **Custom Domain:**
+   - Add your domain in Railway dashboard
+   - Update Twilio webhooks to your domain
+
+### Alternative Platforms
+
+- **Render:** Auto-deploys from GitHub
+- **Heroku:** Use included `Procfile`
+- **DigitalOcean Apps:** Container-ready
+- **AWS/GCP:** Docker deployment
+
+---
+
+## ⚙️ Configuration
+
+### Restaurant Customization
+
+Edit the `SYSTEM_MESSAGE` in `main.py` to customize:
+
+- **Restaurant Details:** Name, address, phone, hours
+- **Menu Information:** Dishes, ingredients, specialties
+- **Policies:** Reservations, cancellations, to-go orders
+- **Brand Voice:** Personality, greeting, philosophy
+
+### AI Voice Settings
+
+```python
+# Voice options: alloy, echo, fable, onyx, nova, shimmer, sage
+"voice": "sage",
+
+# Model selection
+MODEL = "gpt-4o-realtime-preview"
+
+# Temperature (creativity level)
+"temperature": 0.8
 ```
-python3 -m venv env
-source env/bin/activate
+
+### Website Branding
+
+Customize in the HTML template:
+- **Colors:** Update CSS variables for brand colors
+- **Logo:** Replace `logo.png` with your restaurant logo
+- **Content:** Modify features, contact info, and demo number
+
+---
+
+## 📡 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Landing page with demo |
+| `/incoming-call` | GET/POST | Twilio webhook for calls |
+| `/media-stream` | WebSocket | Real-time audio streaming |
+| `/test-twiml` | GET | TwiML testing endpoint |
+| `/logo.png` | GET | Serves restaurant logo |
+
+---
+
+## 📊 Call Analytics
+
+Track important metrics:
+
+- **Call Volume:** Daily, weekly, monthly trends
+- **Peak Hours:** Optimize staffing schedules
+- **Popular Inquiries:** Menu items, reservation requests
+- **Customer Satisfaction:** Call duration and completion rates
+- **Conversion Tracking:** Calls that result in reservations/orders
+
+---
+
+## 🎨 Customization Examples
+
+### Change Restaurant Theme
+
+```python
+# Update system message for Italian restaurant
+SYSTEM_MESSAGE = """
+You are Marco, a friendly host at Bella Vista Italian Restaurant...
+Our specialties include handmade pasta, wood-fired pizza...
+"""
 ```
 
-### Install required packages
+### Modify Voice Personality
 
-In the terminal (with the virtual environment, if you set it up) run:
-```
-pip install -r requirements.txt
-```
+```python
+# Professional and formal
+"temperature": 0.3,
+"instructions": "Be professional and courteous..."
 
-### Twilio setup
-
-#### Point a Phone Number to your ngrok URL
-In the [Twilio Console](https://console.twilio.com/), go to **Phone Numbers** > **Manage** > **Active Numbers** and click on the additional phone number you purchased for this app in the **Prerequisites**.
-
-In your Phone Number configuration settings, update the first **A call comes in** dropdown to **Webhook**, and paste your ngrok forwarding URL (referenced above), followed by `/incoming-call`. For example, `https://[your-ngrok-subdomain].ngrok.app/incoming-call`. Then, click **Save configuration**.
-
-### Update the .env file
-
-Create a `/env` file, or copy the `.env.example` file to `.env`:
-
-```
-cp .env.example .env
+# Warm and casual
+"temperature": 0.8,
+"instructions": "Be warm, friendly, and conversational..."
 ```
 
-In the .env file, update the `OPENAI_API_KEY` to your OpenAI API key from the **Prerequisites**.
+---
 
-## Run the app
-Once ngrok is running, dependencies are installed, Twilio is configured properly, and the `.env` is set up, run the dev server with the following command:
-```
-python main.py
-```
-## Test the app
-With the development server running, call the phone number you purchased in the **Prerequisites**. After the introduction, you should be able to talk to the AI Assistant. Have fun!
+## 🤝 Contributing
 
-## Special features
+We welcome contributions! Here's how to get started:
 
-### Have the AI speak first
-To have the AI voice assistant talk before the user, uncomment the line `# await send_initial_conversation_item(openai_ws)`. The initial greeting is controlled in `async def send_initial_conversation_item(openai_ws)`.
+1. **Fork** the repository
+2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+3. **Commit** your changes: `git commit -m 'Add amazing feature'`
+4. **Push** to the branch: `git push origin feature/amazing-feature`
+5. **Open** a Pull Request
 
-### Interrupt handling/AI preemption
-When the user speaks and OpenAI sends `input_audio_buffer.speech_started`, the code will clear the Twilio Media Streams buffer and send OpenAI `conversation.item.truncate`.
+### Development Guidelines
 
-Depending on your application's needs, you may want to use the [`input_audio_buffer.speech_stopped`](https://platform.openai.com/docs/api-reference/realtime-server-events/input-audio-buffer-speech-stopped) event, instead, or a combination of the two.
+- Follow Python PEP 8 style guidelines
+- Add tests for new features
+- Update documentation for any API changes
+- Test thoroughly with different restaurant scenarios
+
+---
+
+## 📞 Support
+
+- **Email:** [hello@getpluto.ai](mailto:hello@getpluto.ai)
+- **Phone:** (608) 886-1118
+- **Issues:** [GitHub Issues](https://github.com/shrehitg/pluto_resturant_ai/issues)
+- **Demo:** Call (415) 449-7391
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🌟 Acknowledgments
+
+- **OpenAI** for the incredible Realtime API
+- **Twilio** for robust telephony infrastructure
+- **Shizen Restaurant** for being our featured demo partner
+- **Railway** for seamless deployment platform
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the restaurant industry**
+
+[🌐 Visit Pluto](https://getpluto.ai) | [📞 Try Demo](tel:+14154497391) | [⭐ Star on GitHub](https://github.com/shrehitg/pluto_resturant_ai)
+
+</div>
