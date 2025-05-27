@@ -451,7 +451,7 @@ async def index_page():
                     <div class="feature-card">
                         <div class="feature-icon">📊</div>
                         <h3>Smart Customer Insights</h3>
-                        <p>Boost revenue with AI that remembers customer preferences and automatically sends targeted promotions. Increase order frequency and size through personalized recommendations.</p>
+                        <p>Boost revenue with AI that remembers customer preferences and enables you to send targeted promotions through the platform. Increase order frequency and size through personalized recommendations.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">💰</div>
