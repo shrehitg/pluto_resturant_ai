@@ -419,7 +419,7 @@ async def index_page():
                     <strong>Phone:</strong> (608) 886-1118
                 </p>
                 <p style="margin-top: 2rem; opacity: 0.7;">
-                    © 2025 Pluto.
+                    © 2025 Pluto
                 </p>
             </div>
         </section>
