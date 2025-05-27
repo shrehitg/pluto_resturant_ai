@@ -75,9 +75,345 @@ app = FastAPI()
 if not OPENAI_API_KEY:
     raise ValueError('Missing the OpenAI API key. Please set it in the .env file.')
 
-@app.get("/", response_class=JSONResponse)
+@app.get("/", response_class=HTMLResponse)
 async def index_page():
-    return {"message": "Twilio Media Stream Server is running!"}
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VoiceServe AI - Restaurant Voice Agents</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            header {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 1rem 0;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                z-index: 1000;
+                box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            }
+            
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #667eea;
+            }
+            
+            .nav-links {
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+            }
+            
+            .nav-links a {
+                text-decoration: none;
+                color: #333;
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+            
+            .nav-links a:hover {
+                color: #667eea;
+            }
+            
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: white;
+                padding-top: 80px;
+            }
+            
+            .hero-content h1 {
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+                animation: fadeInUp 1s ease;
+            }
+            
+            .hero-content p {
+                font-size: 1.3rem;
+                margin-bottom: 2rem;
+                opacity: 0.9;
+                animation: fadeInUp 1s ease 0.2s both;
+            }
+            
+            .cta-button {
+                display: inline-block;
+                background: #ff6b6b;
+                color: white;
+                padding: 15px 30px;
+                text-decoration: none;
+                border-radius: 50px;
+                font-weight: bold;
+                font-size: 1.1rem;
+                transition: all 0.3s;
+                animation: fadeInUp 1s ease 0.4s both;
+            }
+            
+            .cta-button:hover {
+                background: #ff5252;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            }
+            
+            .features {
+                background: white;
+                padding: 80px 0;
+            }
+            
+            .features h2 {
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 3rem;
+                color: #333;
+            }
+            
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .feature-card {
+                background: #f8f9fa;
+                padding: 2rem;
+                border-radius: 15px;
+                text-align: center;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+            
+            .feature-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            }
+            
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: #333;
+            }
+            
+            .demo {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 80px 0;
+                text-align: center;
+            }
+            
+            .demo h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .demo-card {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 2rem;
+                margin: 2rem auto;
+                max-width: 600px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            
+            .phone-number {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #ff6b6b;
+                margin: 1rem 0;
+            }
+            
+            .footer {
+                background: #333;
+                color: white;
+                text-align: center;
+                padding: 2rem 0;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .hero-content h1 {
+                    font-size: 2.5rem;
+                }
+                
+                .nav-links {
+                    display: none;
+                }
+                
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav class="container">
+                <div class="logo">🎙️ VoiceServe AI</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>AI Voice Agents for Restaurants</h1>
+                    <p>Transform your restaurant's phone experience with intelligent AI assistants that handle reservations, orders, and customer inquiries 24/7</p>
+                    <a href="#demo" class="cta-button">Try Our Demo</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Why Choose VoiceServe AI?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h3>24/7 Availability</h3>
+                        <p>Never miss a call again. Our AI agents work around the clock to serve your customers, even during busy hours or after closing time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🍽️</div>
+                        <h3>Restaurant Expertise</h3>
+                        <p>Trained specifically for restaurants, our AI understands menus, dietary restrictions, reservations, and food service operations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Instant Setup</h3>
+                        <p>Get started in minutes. Simply provide your menu and restaurant details, and we'll have your AI agent ready to serve customers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Cost Effective</h3>
+                        <p>Reduce staffing costs while improving customer service. Our AI agents handle multiple calls simultaneously without breaks.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Accurate Orders</h3>
+                        <p>Eliminate order mistakes with precise AI that confirms details, handles modifications, and processes payments seamlessly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Analytics & Insights</h3>
+                        <p>Get detailed reports on call volume, popular items, peak hours, and customer preferences to optimize your business.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="demo">
+            <div class="container">
+                <h2>Experience Our AI in Action</h2>
+                <div class="demo-card">
+                    <h3>🍣 Call Shizen Restaurant</h3>
+                    <p>Try our live demo by calling our AI agent "Plato" at Shizen, a vegan sushi restaurant in San Francisco.</p>
+                    <div class="phone-number">📞 (415) 678-5767</div>
+                    <p><strong>What you can try:</strong></p>
+                    <ul style="text-align: left; margin: 1rem 0; padding-left: 2rem;">
+                        <li>Make a reservation for your party</li>
+                        <li>Ask about the vegan menu options</li>
+                        <li>Inquire about hours and location</li>
+                        <li>Place a to-go order</li>
+                        <li>Ask about dietary accommodations</li>
+                    </ul>
+                    <p><em>This is a real working AI agent serving actual customers!</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="footer">
+            <div class="container">
+                <h3>Ready to Transform Your Restaurant?</h3>
+                <p>Contact us today to set up your custom AI voice agent</p>
+                <p style="margin-top: 1rem;">
+                    <strong>Email:</strong> hello@voiceserve.ai | 
+                    <strong>Phone:</strong> (555) 123-VOICE
+                </p>
+                <p style="margin-top: 2rem; opacity: 0.7;">
+                    © 2024 VoiceServe AI. Powered by OpenAI Realtime API & Twilio.
+                </p>
+            </div>
+        </section>
+
+        <script>
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add scroll effect to header
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                }
+            });
+        </script>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
 
 @app.api_route("/incoming-call", methods=["GET", "POST"])
 async def handle_incoming_call(request: Request):
