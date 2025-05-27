@@ -360,7 +360,7 @@ async def index_page():
                     <div class="feature-card">
                         <div class="feature-icon">📞</div>
                         <h3>24/7 Availability</h3>
-                        <p>Never miss a call again. Our AI agents work around the clock to serve your customers, even during busy hours or after closing time.</p>
+                        <p>Never miss a revenue opportunity. Our AI captures every order and reservation call, even during peak hours and after closing time.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🍽️</div>
@@ -370,7 +370,7 @@ async def index_page():
                     <div class="feature-card">
                         <div class="feature-icon">📊</div>
                         <h3>Smart Customer Insights</h3>
-                        <p>Our AI remembers every customer's preferences, usual orders, and dining history. Send targeted promos via text, offer personalized recommendations, and create VIP experiences for your regulars automatically.</p>
+                        <p>Boost revenue with AI that remembers customer preferences and automatically sends targeted promotions. Increase order frequency and size through personalized recommendations.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">💰</div>
