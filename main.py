@@ -398,7 +398,7 @@ async def index_page():
                     <h3>🍣 Call Shizen Restaurant</h3>
                     <p>Try our live demo by calling our AI agent "Pluto" at Shizen, a vegan sushi restaurant in San Francisco.</p>
                     <div class="phone-number">📞 (415) 449-7391</div>
-                    <p><strong>What you can try:</strong></p>
+                    <p><strong>Some example queries:</strong></p>
                     <ul style="text-align: left; margin: 1rem 0; padding-left: 2rem;">
                         <li>Make a reservation for your party</li>
                         <li>Ask about the vegan menu options</li>
