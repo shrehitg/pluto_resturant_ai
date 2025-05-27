@@ -83,7 +83,7 @@ async def index_page():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>VoiceServe AI - Restaurant Voice Agents</title>
+        <title>Pluto - Restaurant Voice Agents</title>
         <style>
             * {
                 margin: 0;
@@ -293,7 +293,7 @@ async def index_page():
     <body>
         <header>
             <nav class="container">
-                <div class="logo">🎙️ VoiceServe AI</div>
+                <div class="logo">🪐 Pluto</div>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#features">Features</a></li>
@@ -315,7 +315,7 @@ async def index_page():
 
         <section id="features" class="features">
             <div class="container">
-                <h2>Why Choose VoiceServe AI?</h2>
+                <h2>Why Choose Pluto?</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">📞</div>
@@ -376,11 +376,11 @@ async def index_page():
                 <h3>Ready to Transform Your Restaurant?</h3>
                 <p>Contact us today to set up your custom AI voice agent</p>
                 <p style="margin-top: 1rem;">
-                    <strong>Email:</strong> hello@voiceserve.ai | 
-                    <strong>Phone:</strong> (555) 123-VOICE
+                    <strong>Email:</strong> hello@pluto.ai | 
+                    <strong>Phone:</strong> (555) 123-PLUTO
                 </p>
                 <p style="margin-top: 2rem; opacity: 0.7;">
-                    © 2024 VoiceServe AI. Powered by OpenAI Realtime API & Twilio.
+                    © 2024 Pluto. Powered by OpenAI Realtime API & Twilio.
                 </p>
             </div>
         </section>
