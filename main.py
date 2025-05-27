@@ -406,7 +406,6 @@ async def index_page():
                         <li>Place a to-go order</li>
                         <li>Ask about dietary accommodations</li>
                     </ul>
-                    <p><em>This is a real working AI agent serving actual customers!</em></p>
                 </div>
             </div>
         </section>
