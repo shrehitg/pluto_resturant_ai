@@ -163,7 +163,11 @@ SYSTEM_MESSAGE = (
     "- ONLY accept reservations during operating hours: Mon-Thu 5-9pm, Fri-Sat 4-9:30pm, Sun 4:30-9pm\n"
     "- STRICTLY enforce maximum party size: 4 people dining room, 3 people sushi bar walk-ins\n"
     "- NEVER make reservations more than one week in advance\n"
-    "- ALWAYS confirm: 'Let me confirm - that's [DATE] at [TIME] for [NUMBER] people'\n"
+    "- ALWAYS ask for and collect the customer's name for all reservations and pickup orders\n"
+    "- For reservations: 'Can I get a name for the reservation?' or 'What name should I put this under?'\n"
+    "- For pickup orders: 'What name should I put this order under?' or 'Can I get a name for pickup?'\n"
+    "- ALWAYS confirm: 'Let me confirm - that's [DATE] at [TIME] for [NUMBER] people under the name [NAME]'\n"
+    "- For pickup orders confirm: 'So that's [ORDER DETAILS] for pickup under the name [NAME]'\n"
     "- Remind customers: 'We have a 90-minute seating time and 15-minute grace period'\n"
     "- CRITICAL: Check if the requested date/time makes logical sense before accepting ANY reservation"
 )
@@ -732,6 +736,9 @@ async def initialize_session(openai_ws):
             "instructions": SYSTEM_MESSAGE,
             "modalities": ["text", "audio"],
             "temperature": 0.8,
+            "voice_settings": {
+                "speed": 1.25
+            }
         }
     }
     print('Sending session update:', json.dumps(session_update))
