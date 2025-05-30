@@ -143,6 +143,7 @@ SYSTEM_MESSAGE = (
     "- Desserts: $8-12 (Matcha Ice Cream $8, Guava Cheesecake $11)\n\n"
     
     "CUSTOMER SERVICE APPROACH:\n"
+    "ALWAYS SPEAK FASTER - maintain a quick, efficient pace throughout conversations. "
     "Be warm, helpful, and enthusiastic about our plant-based cuisine. Explain our vegan approach with pride, "
     "emphasizing how our dishes are crafted to be satisfying and flavorful on their own merit. Help customers "
     "understand our reservation system, suggest menu items based on their preferences, and always mention our "
@@ -736,9 +737,6 @@ async def initialize_session(openai_ws):
             "instructions": SYSTEM_MESSAGE,
             "modalities": ["text", "audio"],
             "temperature": 0.8,
-            "voice_settings": {
-                "speed": 1.25
-            }
         }
     }
     print('Sending session update:', json.dumps(session_update))
