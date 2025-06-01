@@ -531,7 +531,7 @@ async def index_page():
                 <h3>Ready to Transform Your Restaurant?</h3>
                 <p>Contact us today to set up your custom AI voice agent</p>
                 <p style="margin-top: 1rem;">
-                    <strong>Email:</strong> hello@getpluto.ai | 
+                    <strong>Email:</strong> hello@getplutoai.net | 
                     <strong>Phone:</strong> (608) 886-1118
                 </p>
                 <p style="margin-top: 2rem; opacity: 0.7;">

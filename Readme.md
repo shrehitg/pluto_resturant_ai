@@ -241,7 +241,7 @@ We welcome contributions! Here's how to get started:
 
 ## 📞 Support
 
-- **Email:** [hello@getpluto.ai](mailto:hello@getpluto.ai)
+- **Email:** [hello@getplutoai.net](mailto:hello@getplutoai.net)
 - **Phone:** (608) 886-1118
 - **Issues:** [GitHub Issues](https://github.com/shrehitg/pluto_resturant_ai/issues)
 - **Demo:** Call (415) 449-7391
