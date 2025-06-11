@@ -52,7 +52,7 @@ Get detailed reports on call volume, peak hours, popular menu items, and convers
 ## 🛠 Tech Stack
 
 - **Backend:** FastAPI (Python)
-- **AI:** OpenAI Realtime API (gpt-4o-realtime-preview)
+- **AI:** OpenAI Realtime API (gpt-4o-realtime-preview-2025-06-03)
 - **Telephony:** Twilio Voice & Media Streams
 - **Audio:** Real-time WebSocket streaming with G.711 μ-law
 - **Deployment:** Railway (with Docker support)
@@ -155,7 +155,7 @@ Edit the `SYSTEM_MESSAGE` in `main.py` to customize:
 "voice": "sage",
 
 # Model selection
-MODEL = "gpt-4o-realtime-preview"
+MODEL = "gpt-4o-realtime-preview-2025-06-03"
 
 # Temperature (creativity level)
 "temperature": 0.8
