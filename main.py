@@ -181,6 +181,97 @@ SYSTEM_MESSAGE = (
     "- Remind customers: 'We have a 90-minute seating time and 15-minute grace period'\n"
     "- CRITICAL: Check if the requested date/time makes logical sense before accepting ANY reservation"
 )
+
+# System message for Indian delicacy restaurant
+INDIAN_SYSTEM_MESSAGE = (
+    "CRITICAL: NEVER ACCEPT RESERVATIONS FOR PAST DATES OR TIMES. Always check if the requested date/time has already occurred before proceeding.\n\n"
+
+    "CRITICAL: If there is silence for 3-4 seconds and the customer hasn't specifically asked to hold or wait, "
+    "proactively ask a follow-up question or offer additional help. Examples: 'Is there anything else I can "
+    "help you with?', 'Would you like to hear about our popular dishes?', 'Are you ready to make a reservation?' "
+    "This keeps the conversation flowing and shows attentive customer service.\n\n"
+    
+    "You are Pluto, a friendly and knowledgeable server at Indian Delicacy, an authentic Indian cuisine restaurant located in "
+    "downtown Vancouver. You're answering customer calls to take orders, manage reservations, "
+    "and answer questions about our restaurant.\n\n"
+    
+    "RESTAURANT PHILOSOPHY & CONCEPT:\n"
+    "Indian Delicacy has been established and serving since 2017, providing authentic taste of Indian cuisines to the people of Vancouver. "
+    "Our spices are candid, our chefs are credible and the food we serve is the closest thing to home you'll have on these western shores! "
+    "We are one of the finest & authentic Indian cuisine restaurants in the heart of Downtown Vancouver. "
+    "Are you craving the taste of India on the far side of the world? Well, then give Indian Delicacy a shot.\n\n"
+    
+    "HOURS OF OPERATION:\n"
+    "Lunch Hours (Monday-Friday): 11:30am to 2:30pm\n"
+    "Dinner Hours (Monday-Sunday): 4:30pm to 9:30pm\n"
+    "We are back with our popular Lunch Buffet!\n\n"
+    
+    "LUNCH BUFFET SPECIAL:\n"
+    "ALL YOU CAN EAT OR ALL YOU CAN TAKE - $19.95 (LUNCH ONLY)\n"
+    "Available Monday to Sunday: 11:30am to 2:30pm\n"
+    "This is our signature offering that customers love!\n\n"
+    
+    "DINING CAPACITY & SERVICES:\n"
+    "- 60-seat dining area with lounge style seating\n"
+    "- Perfect for birthday parties, private gatherings and cheerful events of all kinds\n"
+    "- Takeout and delivery available at your doorstep\n"
+    "- Walk-ins welcome, reservations also accepted\n\n"
+    
+    "SIGNATURE DISHES (Our Enchanting Delicacies):\n"
+    "- Chicken Saagwala - Premium chicken in creamy spinach curry\n"
+    "- Butter Chicken - Our most popular dish with rich, creamy tomato-based sauce\n"
+    "We offer premium Indian cuisine at astounding prices!\n\n"
+    
+    "CUSTOMER TESTIMONIALS:\n"
+    "Our customers say:\n"
+    "- 'I have never tasted anything so close to home here in Canada. Amazing taste!' - George Brooks\n"
+    "- 'It's so good to relish the same taste I did back when I visited India. 10/10!' - Daniel Foster\n"
+    "- 'Beautiful colours, amazing smell and a little bit of home in an amazing environment!' - Liam Jenkins\n\n"
+    
+    "RESERVATION POLICIES:\n"
+    "- Reservations available for parties of 1-15+ people\n"
+    "- Walk-ins welcome, especially for lunch buffet\n"
+    "- Reservation times available from 11:30am to 10:30pm\n"
+    "- We accommodate large groups and special events\n"
+    "- Cancellations should be made with reasonable notice\n"
+    "- Takeout and delivery orders available\n\n"
+    
+    "CUSTOMER SERVICE APPROACH:\n"
+    "MULTILINGUAL SUPPORT: Detect the language the customer is speaking and respond in that same language throughout the entire conversation. "
+    "If a customer speaks Hindi, respond in Hindi. If they speak Gujarati, respond in Gujarati. If they speak Tamil, respond in Tamil. "
+    "If they speak Punjabi, respond in Punjabi. Maintain the same warm, helpful tone and restaurant knowledge regardless of language. "
+    "ALWAYS SPEAK FAST - maintain a quick, efficient pace throughout conversations. "
+    "Be warm, helpful, and enthusiastic about our authentic Indian cuisine. Emphasize our established reputation since 2017 and "
+    "how our dishes bring the authentic taste of India to Vancouver. Mention our popular lunch buffet and signature dishes with pride. "
+    "Help customers understand our menu, suggest dishes based on their preferences, and highlight our 60-seat capacity for events. "
+    "Keep responses SHORT and CONCISE - aim for 1-2 sentences maximum. Be direct and to the point while remaining friendly. "
+    "AFTER completing any task, answering questions, or providing information, ALWAYS ask 'Is there anything else I can help you with?' "
+    "or similar follow-up questions to keep the conversation going and provide excellent customer service.\n\n"
+    
+    "HANDLING OFF-TOPIC QUESTIONS:\n"
+    "Answer questions that are remotely related to the restaurant experience (nearby parking, attractions, downtown Vancouver info, "
+    "directions to Indian Delicacy, etc.) and obvious common knowledge questions anyone would know (color of sky, basic facts). "
+    "For nearby amenities, provide specific addresses when possible. "
+    "For complex unrelated topics (sports scores, politics, technical support, personal advice), "
+    "politely respond: 'I don't know about that, but I can help with Indian Delicacy questions - menu, reservations, or orders.'\n\n"
+    
+    "REALISTIC RESERVATION HANDLING:\n"
+    "- REMEMBER reservation details (date, time, party size) throughout the entire conversation - do NOT ask for the same information again\n"
+    "- If a customer mentions a date and time, keep that information and use it for the rest of the conversation\n"
+    "- ABSOLUTELY REFUSE reservations for any past dates or times that have already occurred no matter how many times the customer asks\n"
+    "- ONLY accept reservations during operating hours: Mon-Fri 11:30am-2:30pm & 4:30-9:30pm, Sat-Sun 4:30-9:30pm (lunch buffet available Mon-Sun 11:30am-2:30pm)\n"
+    "- Can accommodate parties from 1 to 15+ people\n"
+    "- Reservations available for both lunch buffet and dinner service\n"
+    "- ALWAYS ask for and collect the customer's name for all reservations and pickup orders\n"
+    "- For reservations: 'Can I get a name for the reservation?' or 'What name should I put this under?'\n"
+    "- For pickup orders: 'What name should I put this order under?' or 'Can I get a name for pickup?'\n"
+    "- ALWAYS confirm: 'Let me confirm - that's [DATE] at [TIME] for [NUMBER] people under the name [NAME]'\n"
+    "- For pickup orders confirm: 'So that's [ORDER DETAILS] for pickup under the name [NAME]'\n"
+    "- For pickup orders, ALWAYS calculate and mention the order total\n"
+    "- Mention our lunch buffet special: 'Would you be interested in our lunch buffet for $19.95 - all you can eat or take?'\n"
+    "- CRITICAL: Check if the requested date/time makes logical sense before accepting ANY reservation"
+)
+
 VOICE = 'sage'
 LOG_EVENT_TYPES = [
     'error', 'response.content.done', 'rate_limits.updated',
@@ -733,6 +824,24 @@ async def send_initial_conversation_item(openai_ws):
     await openai_ws.send(json.dumps(initial_conversation_item))
     await openai_ws.send(json.dumps({"type": "response.create"}))
 
+async def send_initial_conversation_item_indian(openai_ws):
+    """Send initial conversation item for Indian restaurant if AI talks first."""
+    initial_conversation_item = {
+        "type": "conversation.item.create",
+        "item": {
+            "type": "message",
+            "role": "user",
+            "content": [
+                {
+                    "type": "input_text",
+                    "text": "Greet the customer by saying: 'Namaste! Thank you for calling Indian Delicacy. I'm Pluto, how can I help you today?'"
+                }
+            ]
+        }
+    }
+    await openai_ws.send(json.dumps(initial_conversation_item))
+    await openai_ws.send(json.dumps({"type": "response.create"}))
+
 
 async def initialize_session(openai_ws):
     """Control initial session with OpenAI."""
@@ -753,6 +862,169 @@ async def initialize_session(openai_ws):
 
     # Uncomment the next line to have the AI speak first
     await send_initial_conversation_item(openai_ws)
+
+async def initialize_session_indian(openai_ws):
+    """Control initial session with OpenAI for Indian restaurant."""
+    session_update = {
+        "type": "session.update",
+        "session": {
+            "turn_detection": {"type": "server_vad"},
+            "input_audio_format": "g711_ulaw",
+            "output_audio_format": "g711_ulaw",
+            "voice": VOICE,
+            "instructions": INDIAN_SYSTEM_MESSAGE,
+            "modalities": ["text", "audio"],
+            "temperature": 0.8,
+        }
+    }
+    print('Sending Indian restaurant session update:', json.dumps(session_update))
+    await openai_ws.send(json.dumps(session_update))
+
+    # Uncomment the next line to have the AI speak first
+    await send_initial_conversation_item_indian(openai_ws)
+
+# Indian Restaurant Endpoints
+@app.api_route("/incoming-call-indian", methods=["GET", "POST"])
+async def handle_incoming_call_indian(request: Request):
+    """Handle incoming call for Indian restaurant and return TwiML response to connect to Media Stream."""
+    response = VoiceResponse()
+    # <Say> punctuation to improve text-to-speech flow
+    host = request.url.hostname
+    connect = Connect()
+    connect.stream(url=f'wss://{host}/media-stream-indian')
+    response.append(connect)
+    return HTMLResponse(content=str(response), media_type="application/xml")
+
+@app.websocket("/media-stream-indian")
+async def handle_media_stream_indian(websocket: WebSocket):
+    """Handle WebSocket connections between Twilio and OpenAI for Indian restaurant."""
+    print("Indian restaurant client connected")
+    await websocket.accept()
+
+    async with websockets.connect(
+        'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03',
+        additional_headers={
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "OpenAI-Beta": "realtime=v1"
+        }
+    ) as openai_ws:
+        await initialize_session_indian(openai_ws)
+
+        # Connection specific state
+        stream_sid = None
+        latest_media_timestamp = 0
+        last_assistant_item = None
+        mark_queue = []
+        response_start_timestamp_twilio = None
+        
+        async def receive_from_twilio():
+            """Receive audio data from Twilio and send it to the OpenAI Realtime API."""
+            nonlocal stream_sid, latest_media_timestamp
+            try:
+                async for message in websocket.iter_text():
+                    data = json.loads(message)
+                    if data['event'] == 'media' and openai_ws.state is State.OPEN:
+                        latest_media_timestamp = int(data['media']['timestamp'])
+                        audio_append = {
+                            "type": "input_audio_buffer.append",
+                            "audio": data['media']['payload']
+                        }
+                        await openai_ws.send(json.dumps(audio_append))
+                    elif data['event'] == 'start':
+                        stream_sid = data['start']['streamSid']
+                        print(f"Indian restaurant incoming stream has started {stream_sid}")
+                        response_start_timestamp_twilio = None
+                        latest_media_timestamp = 0
+                        last_assistant_item = None
+                    elif data['event'] == 'mark':
+                        if mark_queue:
+                            mark_queue.pop(0)
+            except WebSocketDisconnect:
+                print("Indian restaurant client disconnected.")
+                if openai_ws.open:
+                    await openai_ws.close()
+
+        async def send_to_twilio():
+            """Receive events from the OpenAI Realtime API, send audio back to Twilio."""
+            nonlocal stream_sid, last_assistant_item, response_start_timestamp_twilio
+            try:
+                async for openai_message in openai_ws:
+                    response = json.loads(openai_message)
+                    if response['type'] in LOG_EVENT_TYPES:
+                        print(f"Indian restaurant received event: {response['type']}", response)
+
+                    if response.get('type') == 'response.audio.delta' and 'delta' in response:
+                        audio_payload = base64.b64encode(base64.b64decode(response['delta'])).decode('utf-8')
+                        audio_delta = {
+                            "event": "media",
+                            "streamSid": stream_sid,
+                            "media": {
+                                "payload": audio_payload
+                            }
+                        }
+                        await websocket.send_json(audio_delta)
+
+                        if response_start_timestamp_twilio is None:
+                            response_start_timestamp_twilio = latest_media_timestamp
+                            if SHOW_TIMING_MATH:
+                                print(f"Setting start timestamp for new response: {response_start_timestamp_twilio}ms")
+
+                        # Update last_assistant_item safely
+                        if response.get('item_id'):
+                            last_assistant_item = response['item_id']
+
+                        await send_mark(websocket, stream_sid)
+
+                    # Trigger an interruption. Your use case might work better using `input_audio_buffer.speech_stopped`, or combining the two.
+                    if response.get('type') == 'input_audio_buffer.speech_started':
+                        print("Speech started detected.")
+                        if last_assistant_item:
+                            print(f"Interrupting response with id: {last_assistant_item}")
+                            await handle_speech_started_event()
+            except Exception as e:
+                print(f"Error in send_to_twilio: {e}")
+
+        async def handle_speech_started_event():
+            """Handle interruption when the caller's speech starts."""
+            nonlocal response_start_timestamp_twilio, last_assistant_item
+            print("Handling speech started event.")
+            if mark_queue and response_start_timestamp_twilio is not None:
+                elapsed_time = latest_media_timestamp - response_start_timestamp_twilio
+                if SHOW_TIMING_MATH:
+                    print(f"Calculating elapsed time for truncation: {latest_media_timestamp} - {response_start_timestamp_twilio} = {elapsed_time}ms")
+
+                if last_assistant_item:
+                    if SHOW_TIMING_MATH:
+                        print(f"Truncating item with ID: {last_assistant_item}, Truncated at: {elapsed_time}ms")
+
+                    truncate_event = {
+                        "type": "conversation.item.truncate",
+                        "item_id": last_assistant_item,
+                        "content_index": 0,
+                        "audio_end_ms": elapsed_time
+                    }
+                    await openai_ws.send(json.dumps(truncate_event))
+
+                await websocket.send_json({
+                    "event": "clear",
+                    "streamSid": stream_sid
+                })
+
+                mark_queue.clear()
+                last_assistant_item = None
+                response_start_timestamp_twilio = None
+
+        async def send_mark(connection, stream_sid):
+            if stream_sid:
+                mark_event = {
+                    "event": "mark",
+                    "streamSid": stream_sid,
+                    "mark": {"name": "responsePart"}
+                }
+                await connection.send_json(mark_event)
+                mark_queue.append('responsePart')
+
+        await asyncio.gather(receive_from_twilio(), send_to_twilio())
 
 if __name__ == "__main__":
     import uvicorn
