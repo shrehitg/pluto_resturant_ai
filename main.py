@@ -1,13 +1,16 @@
 import os
 import json
+import time
 import base64
 import asyncio
 import websockets
-from fastapi import FastAPI, WebSocket, Request
+import jwt
+from fastapi import FastAPI, WebSocket, Request, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.websockets import WebSocketDisconnect
 from twilio.twiml.voice_response import VoiceResponse, Connect, Say, Stream
+from twilio.request_validator import RequestValidator
 from dotenv import load_dotenv
 from websockets.connection import State
 
@@ -15,7 +18,79 @@ load_dotenv()
 
 # Configuration
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 PORT = int(os.getenv('PORT', 5050))
+
+# Media-stream tokens are short-lived; a call connects its stream immediately
+# after fetching TwiML, so a tight window is enough.
+STREAM_TOKEN_TTL_SECONDS = 60
+
+if not TWILIO_AUTH_TOKEN:
+    print(
+        "WARNING: TWILIO_AUTH_TOKEN is not set. Request validation is DISABLED — "
+        "anyone who knows this URL can open realtime sessions billed to your "
+        "OpenAI account. Set TWILIO_AUTH_TOKEN to enable it."
+    )
+
+
+def _external_url(request: Request) -> str:
+    """Rebuild the URL Twilio signed.
+
+    Twilio computes its signature over the public https:// URL, but behind a
+    proxy (Railway, ngrok) the app sees the forwarded http:// one. Trusting
+    X-Forwarded-Proto here is safe because the signature check that follows is
+    what actually authenticates the request.
+    """
+    url = request.url
+    proto = request.headers.get("x-forwarded-proto")
+    if proto:
+        url = url.replace(scheme=proto.split(",")[0].strip())
+    return str(url)
+
+
+async def verify_twilio_request(request: Request) -> None:
+    """Reject requests not signed by Twilio. No-op when no auth token is set."""
+    if not TWILIO_AUTH_TOKEN:
+        return
+
+    signature = request.headers.get("X-Twilio-Signature", "")
+    form = await request.form()
+    params = {key: value for key, value in form.items()}
+
+    validator = RequestValidator(TWILIO_AUTH_TOKEN)
+    if not validator.validate(_external_url(request), params, signature):
+        print(f"Rejected unsigned request to {request.url.path}")
+        raise HTTPException(status_code=403, detail="Invalid Twilio signature")
+
+
+def issue_stream_token() -> str:
+    """Mint a short-lived token authorizing one media-stream connection."""
+    now = int(time.time())
+    return jwt.encode(
+        {"iat": now, "exp": now + STREAM_TOKEN_TTL_SECONDS},
+        TWILIO_AUTH_TOKEN,
+        algorithm="HS256",
+    )
+
+
+async def verify_stream_token(websocket: WebSocket) -> bool:
+    """Validate the token on a media-stream connection.
+
+    Twilio does not sign WebSocket upgrades, so the TwiML embeds a token we
+    minted ourselves and we verify it here. Closes the socket and returns False
+    when the token is missing or invalid.
+    """
+    if not TWILIO_AUTH_TOKEN:
+        return True
+
+    token = websocket.query_params.get("token", "")
+    try:
+        jwt.decode(token, TWILIO_AUTH_TOKEN, algorithms=["HS256"])
+        return True
+    except jwt.PyJWTError as exc:
+        print(f"Rejected media-stream connection: {exc}")
+        await websocket.close(code=1008)
+        return False
 SYSTEM_MESSAGE = (
     "CRITICAL: NEVER ACCEPT RESERVATIONS FOR PAST DATES OR TIMES. Always check if the requested date/time has already occurred before proceeding.\n\n"
 
@@ -667,17 +742,25 @@ async def index_page():
 @app.api_route("/incoming-call", methods=["GET", "POST"])
 async def handle_incoming_call(request: Request):
     """Handle incoming call and return TwiML response to connect to Media Stream."""
+    await verify_twilio_request(request)
+
     response = VoiceResponse()
     # <Say> punctuation to improve text-to-speech flow
     host = request.url.hostname
     connect = Connect()
-    connect.stream(url=f'wss://{host}/media-stream')
+    stream_url = f'wss://{host}/media-stream'
+    if TWILIO_AUTH_TOKEN:
+        stream_url += f'?token={issue_stream_token()}'
+    connect.stream(url=stream_url)
     response.append(connect)
     return HTMLResponse(content=str(response), media_type="application/xml")
 
 @app.websocket("/media-stream")
 async def handle_media_stream(websocket: WebSocket):
     """Handle WebSocket connections between Twilio and OpenAI."""
+    if not await verify_stream_token(websocket):
+        return
+
     print("Client connected")
     await websocket.accept()
 
@@ -887,17 +970,25 @@ async def initialize_session_indian(openai_ws):
 @app.api_route("/incoming-call-indian", methods=["GET", "POST"])
 async def handle_incoming_call_indian(request: Request):
     """Handle incoming call for Indian restaurant and return TwiML response to connect to Media Stream."""
+    await verify_twilio_request(request)
+
     response = VoiceResponse()
     # <Say> punctuation to improve text-to-speech flow
     host = request.url.hostname
     connect = Connect()
-    connect.stream(url=f'wss://{host}/media-stream-indian')
+    stream_url = f'wss://{host}/media-stream-indian'
+    if TWILIO_AUTH_TOKEN:
+        stream_url += f'?token={issue_stream_token()}'
+    connect.stream(url=stream_url)
     response.append(connect)
     return HTMLResponse(content=str(response), media_type="application/xml")
 
 @app.websocket("/media-stream-indian")
 async def handle_media_stream_indian(websocket: WebSocket):
     """Handle WebSocket connections between Twilio and OpenAI for Indian restaurant."""
+    if not await verify_stream_token(websocket):
+        return
+
     print("Indian restaurant client connected")
     await websocket.accept()
 

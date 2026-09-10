@@ -7,6 +7,9 @@ starlette>=0.46.0
 websockets>=13.1
 aiofiles>=24.1.0
 
+# Form parsing (required by Starlette to read Twilio's POST body)
+python-multipart>=0.0.9
+
 # Data validation
 pydantic>=2.10.5
 pydantic-core>=2.27.2
